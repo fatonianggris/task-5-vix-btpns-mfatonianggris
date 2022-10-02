@@ -4,22 +4,23 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/temmy-alex/final-assignment/models"
+	"rakaminbtpn/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 var (
 	host     = "localhost"
-	user     = "postgres"
+	user     = "root"
 	password = "root"
-	dbPort   = "5432"
-	dbname   = "finalassignment"
+	dbPort   = "3307"
+	dbname   = "rakaminbtpn"
 	db       *gorm.DB
 	err      error
 )
 
-func start_db() {
+func Start_db() {
 	config := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable", host, user, password, dbname, dbPort)
 	dsn := config
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
@@ -32,6 +33,6 @@ func start_db() {
 	db.Debug().AutoMigrate(models.User{}, models.Photo{})
 }
 
-func get_db() *gorm.DB {
+func Get_db() *gorm.DB {
 	return db
 }

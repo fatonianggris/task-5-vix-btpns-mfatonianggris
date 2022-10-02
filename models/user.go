@@ -3,8 +3,10 @@ package models
 import (
 	"time"
 
-	"github.com/luthfikw/govalidator"
+	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
+
+	"rakaminbtpn/helpers"
 )
 
 type User struct {
@@ -17,7 +19,7 @@ type User struct {
 	UpdatedAt *time.Time `json:"-,omitempty"`
 }
 
-func (u *User) before_create(tx *gorm.DB) (err error) {
+func (u *User) Before_create(tx *gorm.DB) (err error) {
 	_, errCreate := govalidator.ValidateStruct(u)
 
 	if errCreate != nil {
@@ -25,13 +27,13 @@ func (u *User) before_create(tx *gorm.DB) (err error) {
 		return
 	}
 
-	u.Password = helpers.hash_pass(u.Password)
+	u.Password = helpers.Hash_pass(u.Password)
 
 	err = nil
 	return
 }
 
-func (u *User) before_update(tx *gorm.DB) (err error) {
+func (u *User) Before_update(tx *gorm.DB) (err error) {
 	_, errCreate := govalidator.ValidateStruct(u)
 
 	if errCreate != nil {
@@ -39,7 +41,7 @@ func (u *User) before_update(tx *gorm.DB) (err error) {
 		return
 	}
 
-	u.Password = helpers.hash_pass(u.Password)
+	u.Password = helpers.Hash_pass(u.Password)
 	err = nil
 	return
 }

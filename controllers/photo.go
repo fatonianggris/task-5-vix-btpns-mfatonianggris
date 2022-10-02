@@ -3,18 +3,22 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
-	"github.com/temmy-alex/final-assignment/models"
+
+	"net/http"
+	"rakaminbtpn/database"
+	"rakaminbtpn/helpers"
+	"rakaminbtpn/models"
 )
 
-func list_photo(c *gin.Context) {
+func List_photo(c *gin.Context) {
 	var (
 		photos []models.Photo
 	)
 
-	db := database.get_db()
+	db := database.Get_db()
 	err := db.Preload("User").Find(&photos).Error
 
 	if err != nil {
@@ -30,9 +34,10 @@ func list_photo(c *gin.Context) {
 	})
 }
 
-func create_photo(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func Create_photo(c *gin.Context) {
+	db := database.Get_db()
+	userData := c.MustGet("userData").(jwt.MapClaims)
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 
 	Photo := models.Photo{}
@@ -66,9 +71,9 @@ func create_photo(c *gin.Context) {
 	})
 }
 
-func update_photo(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func Update_photo(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 
 	Photo := models.Photo{}
@@ -103,9 +108,9 @@ func update_photo(c *gin.Context) {
 	})
 }
 
-func delete_photo(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func Delete_photo(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 	Photo := models.Photo{}
 

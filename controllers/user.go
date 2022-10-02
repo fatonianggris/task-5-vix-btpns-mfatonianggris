@@ -5,17 +5,20 @@ import (
 	"fmt"
 	"net/http"
 
+	"rakaminbtpn/database"
+	"rakaminbtpn/helpers"
+	"rakaminbtpn/models"
+
 	"github.com/gin-gonic/gin"
-	"github.com/temmy-alex/final-assignment/models"
 )
 
 var (
 	appJSON = "application/json"
 )
 
-func user_register(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func User_register(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 	User := models.User{}
 
@@ -43,9 +46,9 @@ func user_register(c *gin.Context) {
 	})
 }
 
-func user_login(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func User_login(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 	User := models.User{}
 	password := ""
@@ -69,7 +72,7 @@ func user_login(c *gin.Context) {
 		return
 	}
 
-	comparePass := helpers.compare_pass([]byte(User.Password), []byte(password))
+	comparePass := helpers.Compare_pass([]byte(User.Password), []byte(password))
 
 	if !comparePass {
 		c.JSON(http.StatusUnauthorized, gin.H{
@@ -80,16 +83,16 @@ func user_login(c *gin.Context) {
 		return
 	}
 
-	token := helpers.generate_tokens(User.ID, User.Email)
+	token := helpers.Generate_tokens(User.ID, User.Email)
 
 	c.JSON(http.StatusOK, gin.H{
 		"token": token,
 	})
 }
 
-func user_update(c *gin.Context) {
-	db := database.get_db()
-	contentType := helpers.get_content_type(c)
+func User_update(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 
 	User := models.User{}
@@ -132,9 +135,9 @@ func user_update(c *gin.Context) {
 	})
 }
 
-func user_delete(c *gin.Context) {
-	db := database.get_dbs()
-	contentType := helpers.get_content_type(c)
+func User_delete(c *gin.Context) {
+	db := database.Get_db()
+	contentType := helpers.Get_content_type(c)
 	_, _ = db, contentType
 	User := models.User{}
 

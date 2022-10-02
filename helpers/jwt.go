@@ -10,7 +10,7 @@ import (
 
 var secretKey = "secretKey"
 
-func generate_tokens(id uint, email string) string {
+func Generate_tokens(id uint, email string) string {
 	claims := jwt.MapClaims{
 		"id":    id,
 		"email": email,
@@ -23,7 +23,7 @@ func generate_tokens(id uint, email string) string {
 	return signedToken
 }
 
-func verify_tokens(c *gin.Context) (interface{}, error) {
+func Verify_tokens(c *gin.Context) (interface{}, error) {
 	errResponse := errors.New("sign in")
 	headerToken := c.Request.Header.Get("Authorization")
 	bearer := strings.HasPrefix(headerToken, "Bearer")

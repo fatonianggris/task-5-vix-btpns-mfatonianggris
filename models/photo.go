@@ -18,7 +18,7 @@ type Photo struct {
 	UpdatedAt *time.Time `json:"-,omitempty"`
 }
 
-func (p *Photo) berore_create(tx *gorm.DB) (err error) {
+func (p *Photo) Berore_create(tx *gorm.DB) (err error) {
 	_, errCreate := govalidator.ValidateStruct(p)
 
 	if errCreate != nil {
@@ -30,7 +30,7 @@ func (p *Photo) berore_create(tx *gorm.DB) (err error) {
 	return
 }
 
-func (p *Photo) before_update(tx *gorm.DB) (err error) {
+func (p *Photo) Before_update(tx *gorm.DB) (err error) {
 	_, errCreate := govalidator.ValidateStruct(p)
 
 	if errCreate != nil {
